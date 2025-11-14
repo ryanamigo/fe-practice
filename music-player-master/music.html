@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>music</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #bg{
+            /* vw: view port width */
+            width: 100vw; 
+            height: 100vh;
+            background-image: url(../music-player-master/resources/gradient-bg.jpg);
+            padding-top: 5%;
+            /* 盒模型 */
+            box-sizing: border-box;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        #blackBorder{
+            background-color: rgb(42, 35, 53);
+            margin: 0 auto;
+            width: 346px;
+            height: 500px;
+            border-radius: 30px;
+            padding: 40px;
+        }
+        div{
+            text-align: center;
+        }
+        .musicImage{
+            
+            border-radius: 30px;
+        }
+        .lyrics1{
+            /* text-align: center; */
+            color: white;
+            font-size: 20px;
+            padding-top: 10px;
+        }
+        .lyrics2{
+            color:white;
+            /* text-align: center; */
+            font-size: 13px;   
+            padding-top: 5px;
+        }
+        .middleButton{
+            background-color:pink;
+            width: 60px;height: 60px;
+            border-radius: 50%;
+            margin-left: calc(50% - 30px);
+            text-align: center;
+            margin-top: 50px;
+        }
+        .leftButton{
+            margin-top: -50px;
+            margin-left: 85px;
+            height: 40px; 
+            float: left;
+        }
+        .rightButton{
+            margin-top: -50px;
+            margin-right: 85px;
+            height: 40px;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景 -->
+    <div id="bg">
+        <!-- 内框 -->
+        <div id="blackBorder">
+            <!-- 曲图 -->
+            <img class="musicImage" src="./resources/cover-1.jpg">
+            <!-- 歌词 -->
+            <p class="lyrics1">Lost in the City Lights</p>
+            <p class="lyrics2">Cosmo Sheldrake</p>
+            <!-- 进度条 -->
+            <!-- <progress value="2.23" max="3.15" color="pink">70%</progress> -->
+            <div style="margin-top: 20px;">
+                <p style="color: white; font-size: 10px; text-align: left;">02：23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;03:15</p>
+                <div style="width: 100%;height: 8px; border-radius: 5px; background-color: white; margin-top: 2px;">   
+                    <div style="width: 70%;height: 8px; background-color: pink; border-top-left-radius: 5px; border-bottom-left-radius: 5px;"></div>
+                </div>
+            </div>
+            <!-- 按键 -->
+             <div>
+                <div class="middleButton">  
+                    <img style="width: 60%;height: 100%;" src="./resources/Play_fill.svg">   
+                </div>
+                <img class="leftButton" src="./resources/Stop_and_play_fill-1.svg">
+                <img class="rightButton" src="./resources/Stop_and_play_fill.svg">
+             </div>
+        </div>
+    </div>
+</body>
+</html>
