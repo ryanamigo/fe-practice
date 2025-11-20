@@ -55,17 +55,29 @@
             text-align: center;
             margin-top: 50px;
         }
-        .leftButton{
+        #leftButton{
             margin-top: -50px;
             margin-left: 85px;
             height: 40px; 
             float: left;
         }
-        .rightButton{
+        #rightButton{
             margin-top: -50px;
             margin-right: 85px;
             height: 40px;
             float: right;
+        }
+        #timeLeft{
+            display: inline; 
+            color: white; 
+            font-size: 10px; 
+            text-align: left;
+        }
+        #timeRight{
+            display: inline; 
+            color: white; 
+            font-size: 10px; 
+            text-align: right;
         }
     </style>
 </head>
@@ -82,41 +94,78 @@
             <!-- 进度条 -->
             <!-- <progress value="2.23" max="3.15" color="pink">70%</progress> -->
             <div style="margin-top: 20px;">
-                <p style="color: white; font-size: 10px; text-align: left;">02：23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;03:15</p>
+                <p id="timeLeft"></p>
+                <p id="timeRight"></p>
                 <div style="width: 100%;height: 8px; border-radius: 5px; background-color: white; margin-top: 2px;">   
-                    <div style="width: 70%;height: 8px; background-color: pink; border-top-left-radius: 5px; border-bottom-left-radius: 5px;"></div>
+                    <div id="musicTimeProgress" style="width: 0; height: 8px; background-color: pink; border-top-left-radius: 5px; border-bottom-left-radius: 5px;"></div>
                 </div>
             </div>
             <!-- 按键 -->
              <div>
                 <div class="middleButton">   
-                    <img id="playButton" style="width: 60%;height: 100%;" src="./resources/Play_fill.svg" onclick="playMusic()">   
+                    <img id="playButton" style="width: 60%;height: 100%;" src="./resources/Play_fill.svg" onclick="playOrPause()">   
                 </div>
-                <img class="leftButton" src="./resources/Stop_and_play_fill-1.svg">
-                <img class="rightButton" src="./resources/Stop_and_play_fill.svg">
+                <img id="leftButton" src="./resources/Stop_and_play_fill-1.svg" onclick="playPrev()">
+                <img id="rightButton" src="./resources/Stop_and_play_fill.svg" onclick="playNext()">
              </div>
-             <audio id="audio1">
-                <source src="./resources/forest-lullaby-110624.mp3" type="audio/mpeg">  
-             </audio>
-             <audio id="audio2">
-                <source src="./resources/lost-in-city-lights-145038.mp3" type="audio/mpeg">  
-             </audio>
+             <audio id="audio1" src="./resources/lost-in-city-lights-145038.mp3"></audio>
         </div>
     </div>
 </body>
 </html>
 <script>
     const audio1 = document.getElementById('audio1')
-    const audio2 = document.getElementById('audio2')
-    let ifPlayFlag1 = 0
-    let ifPlayFlag2 = 0
-    function playMusic(){
-        if(ifPlayFlag1 == 0){
-            audio1.play();
+    const playButton = document.getElementById('playButton')
+    const musicTimeProgress = document.getElementById('musicTimeProgress')
+    const timeLeft = document.getElementById('timeLeft')
+    const timeRight = document.getElementById('timeRight')
+    let ifPlayFlag = 0 //是否播放标志位 0表示暂停，1表示播放
+    let currentIndex = 0 //歌曲数组下标的标志位
+    //歌曲数组
+    const musicArray=[
+        {name:'./resources/lost-in-city-lights-145038.mp3',time:72},
+        {name:'./resources/forest-lullaby-110624.mp3',time:138},
+        {name:'./resources/惊叹俱乐部.mp3',time:107}
+    ]
+    timeLeft.innerHTML = 0
+    timeRight.innerHTML = musicArray[0].time
+    //播放or暂停
+    function playOrPause(){
+        if(ifPlayFlag == 0) {
+            audio1.play()
+            playButton.src = './resources/pause.svg'
+            let time = 0
+            const intervalId = setInterval(()=>{
+                if(audio1.currentTime <= audio1.duration){
+                    timeLeft.innerHTML = audio1.currentTime - audio1.currentTime%1
+                    timeRight.innerHTML = audio1.duration - audio1.duration%1
+                    musicTimeProgress.style.width = `${((audio1.currentTime + 0.0) / audio1.duration)*100}%`
+                }
+            },1000)
         }
-        if(ifPlayFlag1 == 1){
-            audio1.pause();
+        if(ifPlayFlag == 1){ 
+            audio1.pause()
+            playButton.src = './resources/Play_fill.svg'
+            
         }
-        ifPlayFlag1 = !ifPlayFlag1
+        ifPlayFlag = !ifPlayFlag
+    }
+    //上一首
+    function playPrev(){
+        if(currentIndex == 0) currentIndex = musicArray.length-1
+        else currentIndex--
+        audio1.src = musicArray[currentIndex].name
+        audio1.play()
+        if(ifPlayFlag == 0) playButton.src = './resources/pause.svg'
+        if(ifPlayFlag == 1) playButton.src = './resources/Play_fill.svg'
+    }
+    //下一首
+    function playNext(){
+        if(currentIndex == musicArray.length-1) currentIndex = 0
+        else currentIndex++
+        audio1.src = musicArray[currentIndex].name
+        audio1.play()
+        if(ifPlayFlag == 0) playButton.src = './resources/pause.svg'
+        if(ifPlayFlag == 1) playButton.src = './resources/Play_fill.svg'
     }
 </script>
