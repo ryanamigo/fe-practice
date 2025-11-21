@@ -1,0 +1,79 @@
+       * {
+            margin: 0;
+            padding: 0;
+        }
+        #bg{
+            /* vw: view port width */
+            width: 100vw; 
+            height: 100vh;
+            background-image: url(../music-player-master/resources/gradient-bg.jpg);
+            padding-top: 5%;
+            /* 盒模型 */
+            box-sizing: border-box;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        #blackBorder{
+            background-color: rgb(42, 35, 53);
+            margin: 0 auto;
+            width: 346px;
+            height: 500px;
+            border-radius: 30px;
+            padding: 40px;
+        }
+        div{
+            text-align: center;
+        }
+        .musicImage{
+            
+            border-radius: 30px;
+        }
+        #musicName{
+            /* text-align: center; */
+            color: white;
+            font-size: 20px;
+            padding-top: 10px;
+        }
+        .lyrics2{
+            color:white;
+            /* text-align: center; */
+            font-size: 13px;   
+            padding-top: 5px;
+        }
+        .middleButton{
+            background-color:pink;
+            width: 60px;height: 60px;
+            border-radius: 50%;
+            margin-left: calc(50% - 30px);
+            text-align: center;
+            margin-top: 50px;
+        }
+        #leftButton{
+            margin-top: -50px;
+            margin-left: 85px;
+            height: 40px; 
+            float: left;
+        }
+        #rightButton{
+            margin-top: -50px;
+            margin-right: 85px;
+            height: 40px;
+            float: right;
+        }
+        #timeLeft{
+            display: inline; 
+            color: white; 
+            font-size: 10px; 
+            text-align: left;
+        }
+        #timeRight{
+            display: inline; 
+            color: white; 
+            font-size: 10px; 
+            text-align: right;
+        }
+        .timeBox{
+            display: flex;
+            justify-content: space-between;
+            padding:0 8px;
+        }

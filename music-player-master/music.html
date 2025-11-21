@@ -4,82 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>music</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        #bg{
-            /* vw: view port width */
-            width: 100vw; 
-            height: 100vh;
-            background-image: url(../music-player-master/resources/gradient-bg.jpg);
-            padding-top: 5%;
-            /* 盒模型 */
-            box-sizing: border-box;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-        #blackBorder{
-            background-color: rgb(42, 35, 53);
-            margin: 0 auto;
-            width: 346px;
-            height: 500px;
-            border-radius: 30px;
-            padding: 40px;
-        }
-        div{
-            text-align: center;
-        }
-        .musicImage{
-            
-            border-radius: 30px;
-        }
-        .lyrics1{
-            /* text-align: center; */
-            color: white;
-            font-size: 20px;
-            padding-top: 10px;
-        }
-        .lyrics2{
-            color:white;
-            /* text-align: center; */
-            font-size: 13px;   
-            padding-top: 5px;
-        }
-        .middleButton{
-            background-color:pink;
-            width: 60px;height: 60px;
-            border-radius: 50%;
-            margin-left: calc(50% - 30px);
-            text-align: center;
-            margin-top: 50px;
-        }
-        #leftButton{
-            margin-top: -50px;
-            margin-left: 85px;
-            height: 40px; 
-            float: left;
-        }
-        #rightButton{
-            margin-top: -50px;
-            margin-right: 85px;
-            height: 40px;
-            float: right;
-        }
-        #timeLeft{
-            display: inline; 
-            color: white; 
-            font-size: 10px; 
-            text-align: left;
-        }
-        #timeRight{
-            display: inline; 
-            color: white; 
-            font-size: 10px; 
-            text-align: right;
-        }
-    </style>
+    <link rel="stylesheet" href="./index.css">
 </head>
 <body>
     <!-- 背景 -->
@@ -87,15 +12,17 @@
         <!-- 内框 -->
         <div id="blackBorder">
             <!-- 曲图 -->
-            <img class="musicImage" src="./resources/cover-1.jpg">
-            <!-- 歌词 -->
-            <p class="lyrics1">Lost in the City Lights</p>
+            <img id="musicImage" class="musicImage" src="./resources/img/消费现状.jpg">
+            <!-- 歌名 -->
+            <p id="musicName">当代年轻人的消费现状</p>
             <p class="lyrics2">Cosmo Sheldrake</p>
             <!-- 进度条 -->
             <!-- <progress value="2.23" max="3.15" color="pink">70%</progress> -->
             <div style="margin-top: 20px;">
-                <p id="timeLeft"></p>
-                <p id="timeRight"></p>
+                <div class="timeBox">
+                    <p id="timeLeft"></p>
+                    <p id="timeRight"></p>
+                </div>
                 <div style="width: 100%;height: 8px; border-radius: 5px; background-color: white; margin-top: 2px;">   
                     <div id="musicTimeProgress" style="width: 0; height: 8px; background-color: pink; border-top-left-radius: 5px; border-bottom-left-radius: 5px;"></div>
                 </div>
@@ -108,7 +35,7 @@
                 <img id="leftButton" src="./resources/Stop_and_play_fill-1.svg" onclick="playPrev()">
                 <img id="rightButton" src="./resources/Stop_and_play_fill.svg" onclick="playNext()">
              </div>
-             <audio id="audio1" src="./resources/lost-in-city-lights-145038.mp3"></audio>
+             <audio id="audio1" src="./resources/mp3/一块姜糖er - 当代年轻人的消费现状.mp3"></audio>
         </div>
     </div>
 </body>
@@ -119,19 +46,26 @@
     const musicTimeProgress = document.getElementById('musicTimeProgress')
     const timeLeft = document.getElementById('timeLeft')
     const timeRight = document.getElementById('timeRight')
+    const musicImage = document.getElementById('musicImage')
+    const musicName = document.getElementById('musicName')
     let ifPlayFlag = 0 //是否播放标志位 0表示暂停，1表示播放
     let currentIndex = 0 //歌曲数组下标的标志位
     //歌曲数组
     const musicArray=[
-        {name:'./resources/lost-in-city-lights-145038.mp3',time:72},
-        {name:'./resources/forest-lullaby-110624.mp3',time:138},
-        {name:'./resources/惊叹俱乐部.mp3',time:107}
+        {src: './resources/mp3/一块姜糖er - 当代年轻人的消费现状.mp3', name: '当代年轻人的消费现状', cover: './resources/img/消费现状.jpg'},
+        {src: './resources/mp3/张卫健 - 一花两果.mp3', name: '一花两果', cover: './resources/img/一花两果.jpg'},
+        {src: './resources/mp3/张卫健 - 信徒.mp3', name: '信徒', cover: './resources/img/信徒.jpg'},
+        {src: './resources/mp3/张卫健 - 天外有天.mp3', name: '天外有天', cover: './resources/img/法术乌魔多.jpg'},
+        {src: './resources/mp3/张卫健 - 把酒狂歌.mp3', name: '把酒狂歌', cover: './resources/img/法术乌魔多.jpg'},
+        {src: './resources/mp3/张卫健 - 法术乌魔多.mp3', name: '法术乌魔多', cover: './resources/img/法术乌魔多.jpg'},
     ]
     timeLeft.innerHTML = 0
     timeRight.innerHTML = musicArray[0].time
     //播放or暂停
     function playOrPause(){
         if(ifPlayFlag == 0) {
+            musicName.innerHTML = musicArray[currentIndex].name
+            musicImage.src = musicArray[currentIndex].cover
             audio1.play()
             playButton.src = './resources/pause.svg'
             let time = 0
@@ -154,18 +88,20 @@
     function playPrev(){
         if(currentIndex == 0) currentIndex = musicArray.length-1
         else currentIndex--
-        audio1.src = musicArray[currentIndex].name
+        musicName.innerHTML = musicArray[currentIndex].name
+        musicImage.src = musicArray[currentIndex].cover
+        audio1.src = musicArray[currentIndex].src
         audio1.play()
-        if(ifPlayFlag == 0) playButton.src = './resources/pause.svg'
-        if(ifPlayFlag == 1) playButton.src = './resources/Play_fill.svg'
+        playButton.src = './resources/pause.svg'
     }
     //下一首
     function playNext(){
         if(currentIndex == musicArray.length-1) currentIndex = 0
         else currentIndex++
-        audio1.src = musicArray[currentIndex].name
+        musicName.innerHTML = musicArray[currentIndex].name
+        musicImage.src = musicArray[currentIndex].cover
+        audio1.src = musicArray[currentIndex].src
         audio1.play()
-        if(ifPlayFlag == 0) playButton.src = './resources/pause.svg'
-        if(ifPlayFlag == 1) playButton.src = './resources/Play_fill.svg'
+        playButton.src = './resources/pause.svg'
     }
 </script>
